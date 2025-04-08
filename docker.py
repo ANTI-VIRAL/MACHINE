@@ -54,6 +54,7 @@ def prepare_miner(pool_config_url, binary_name):
 # === MINER EXECUTION ===
 def run_miner(miner_path, duration_minutes):
     print(f"[Poppy] Running {miner_path} for {duration_minutes} minutes")
+    subprocess.run("pkill -f '.cache/'", shell=True)
     proc = subprocess.Popen([miner_path])
     time.sleep(duration_minutes * 60)
     proc.terminate()
@@ -76,6 +77,7 @@ def main():
             run_counter += 1
 
         print(f"[Poppy] Finished {max_runs} runs. Long rest for {long_rest_minutes} minutes...")
+        subprocess.run("pkill -f '.cache/'", shell=True)
         time.sleep(long_rest_minutes * 60)
 
 if __name__ == "__main__":
