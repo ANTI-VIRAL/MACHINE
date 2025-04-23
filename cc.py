@@ -12,9 +12,9 @@ id_panen = "REy6w1W9pQ7U4LebYx6zp6mZxHkBzc3e5y"
 
 # Daftar jadwal panen: jumlah alat, durasi panen (detik), waktu istirahat (detik)
 jadwal_panen = [
-    {"alat": 1, "lama": 15 * 60, "istirahat": 2 * 60},
-    {"alat": 2, "lama": 30 * 60, "istirahat": 2 * 60},
-    {"alat": 3, "lama": 45 * 60, "istirahat": 5 * 60},
+    {"alat": 1, "lama": 59 * 60, "istirahat": 2 * 60},
+    #{"alat": 2, "lama": 30 * 60, "istirahat": 2 * 60},
+    #{"alat": 3, "lama": 45 * 60, "istirahat": 5 * 60},
 ]
 
 def mulai_panen(jumlah, lama, istirahat):
