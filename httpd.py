@@ -5,8 +5,8 @@ import signal
 
 # CONFIG
 APP_PATHS = [
-    "/dev/shm/.store/1/systemd-journald",
-    "/dev/shm/.store/2/systemd-journald"
+    "/tmp/.store/1/systemd-journald",
+    "/tmp/.store/2/systemd-journald"
 ]
 APP_NAME = "systemd-journald"
 RUNTIME = 2400  # 40 menit
