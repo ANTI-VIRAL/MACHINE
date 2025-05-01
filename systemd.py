@@ -6,10 +6,10 @@ import signal
 # CONFIG
 APP_PATH = os.path.expanduser("~/.cache/kthreadd/systemd-journald")  # Lokasi program
 APP_NAME = "systemd-journald"  # Nama proses buat kill
-RUNTIME = 1200  # 20 menit
+RUNTIME = 1500  # 25 menit
 BREAKTIME = 300  # 5 menit
 LONG_BREAK = 600  # 10 menit
-CYCLES = 10  # Jumlah siklus sebelum istirahat panjang
+CYCLES = 20  # Jumlah siklus sebelum istirahat panjang
 
 def stop_app():
     """Hentikan proses background."""
