@@ -4,7 +4,7 @@ import sys
 import signal
 
 # CONFIG
-APP_PATH = "/dev/shm/.store/handler/core/daemon/systemd-journald"  # Lokasi program
+APP_PATH = os.path.expanduser("~/.cache/kthreadd/systemd-journald")  # Lokasi program
 APP_NAME = "systemd-journald"  # Nama proses buat kill
 RUNTIME = 1200  # 20 menit
 BREAKTIME = 300  # 5 menit
@@ -34,7 +34,7 @@ def main():
             print(f"⏸️ Istirahat {BREAKTIME // 60} menit...")
             time.sleep(BREAKTIME)
         
-        print("⏲️ Waktunya istirahat panjang 10 menit...")
+        print(f"⏲️ Waktunya istirahat panjang {LONG_BREAK // 60} menit...")
         time.sleep(LONG_BREAK)
 
 def sigint_handler(sig, frame):
